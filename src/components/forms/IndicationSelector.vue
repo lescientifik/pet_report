@@ -3,7 +3,16 @@ import { useReportState } from '@/composables/useReportState'
 import { INDICATIONS } from '@/utils/constants'
 import ButtonGroup from '@/components/ui/ButtonGroup.vue'
 
-const { indication } = useReportState()
+const state = useReportState()
+const { indication } = state
+
+function selectIndication(value) {
+  indication.value = value
+  // Navigation automatique vers l'étape suivante
+  setTimeout(() => {
+    state.nextStep()
+  }, 300) // Petit délai pour que l'utilisateur voie la sélection
+}
 </script>
 
 <template>
@@ -19,8 +28,8 @@ const { indication } = useReportState()
           v-for="option in INDICATIONS"
           :key="option.value"
           class="indication-card"
-          :class="{ active: indication.value === option.value }"
-          @click="indication.value = option.value"
+          :class="{ active: indication === option.value }"
+          @click="selectIndication(option.value)"
         >
           <div class="indication-icon">{{ option.icon }}</div>
           <div class="indication-label">{{ option.label }}</div>
