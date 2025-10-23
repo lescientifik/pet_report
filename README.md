@@ -113,20 +113,23 @@ Les fichiers optimisés seront générés dans le dossier `dist/`
 
 ## Déploiement GitHub Pages
 
-### Méthode automatique
+Ce projet utilise **GitHub Actions** pour déployer automatiquement vers GitHub Pages.
 
-```bash
-npm run deploy
-```
+### Configuration requise
 
-Cette commande build l'application et la déploie automatiquement sur GitHub Pages.
+**IMPORTANT** : Vous devez configurer GitHub Pages pour utiliser GitHub Actions :
 
-### Méthode manuelle
+1. Allez dans **Settings > Pages** de votre repository
+2. Sous **Source**, sélectionnez **"GitHub Actions"**
+3. Sauvegardez
 
-1. Build l'application : `npm run build`
-2. Push le dossier `dist/` sur la branche `gh-pages`
-3. Activer GitHub Pages dans Settings > Pages
-4. L'URL sera : `https://[username].github.io/[repo-name]/`
+Le workflow se déclenchera automatiquement à chaque push sur `main`.
+
+**Pour plus de détails, voir [GITHUB_PAGES_SETUP.md](./GITHUB_PAGES_SETUP.md)**
+
+### URL de l'application
+
+Une fois déployée : `https://lescientifik.github.io/pet_report/`
 
 ## Licence
 
