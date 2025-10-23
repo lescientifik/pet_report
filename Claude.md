@@ -764,6 +764,24 @@ npm run preview
 
 ---
 
+## 🤝 Workflow de travail avec Claude
+
+### Gestion des Pull Requests et Merge
+- ⚠️ **IMPORTANT** : C'est l'utilisateur qui fait **systématiquement** les Pull Requests et les merges vers `main`
+- Claude développe sur les branches `claude/*` et pousse les commits
+- Claude NE doit PAS créer de PR ni merger vers main sans demande explicite
+
+### Débogage et Tests
+- ⚠️ **IMPORTANT** : L'utilisateur débogue **toujours directement sur le site en ligne** (GitHub Pages)
+- Avant chaque commit, Claude DOIT vérifier que le code va bien fonctionner sur GitHub Pages :
+  - Vérifier les chemins relatifs (base: '/pet_report/')
+  - Vérifier les imports et assets
+  - Tester le build en local (`npm run build`)
+  - S'assurer que toutes les dépendances npm sont listées dans package.json
+- Le développement local n'est qu'un outil de développement, la **validation finale se fait sur GitHub Pages**
+
+---
+
 ## 📝 Notes importantes pour reprise
 
 ### Points d'attention
