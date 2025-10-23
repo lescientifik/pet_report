@@ -1,7 +1,7 @@
 # Mémoire de projet - Générateur de Comptes Rendus TEP-FDG
 
-**Dernière mise à jour** : 23 octobre 2025 - 20:00
-**Version actuelle** : 1.0.0-alpha (Vue 3 + Vite - Phase 3 complétée)
+**Dernière mise à jour** : 23 octobre 2025 - 21:00
+**Version actuelle** : 1.0.0-beta (Vue 3 + Vite - Phase 4 complétée)
 **Prochaine version** : 1.0.0 (Vue 3 + Vite - en cours)
 
 > **📝 CONSIGNE IMPORTANTE** : Ce fichier doit être mis à jour à chaque avancée significative du projet (fin de phase, ajout de fonctionnalité majeure, changement architectural, etc.). Toujours mettre à jour la date et l'état d'avancement.
@@ -9,6 +9,23 @@
 ---
 
 ## 📅 Journal des modifications
+
+### 23 octobre 2025 - 21:00
+**Phase 4 complétée** : Formulaires
+- ✅ IndicationSelector.vue créé (sélection indication avec grandes cartes)
+- ✅ CancerSelector.vue créé (cancers fréquents + recherche)
+- ✅ SeinForm.vue créé (côté, histologie, statut, Ki67)
+- ✅ OrlForm.vue créé (topographie, sous-localisation, HPV, histologie)
+- ✅ LymphomeForm.vue créé (type, statut, stade Ann Arbor)
+- ✅ MelanomeForm.vue créé (site primitif, Breslow, mutation)
+- ✅ PatientInfo.vue créé (âge, sexe, traitement, date)
+- ✅ TepComparison.vue créé (ajout/suppression TEP antérieurs)
+- ✅ ResultsForm.vue créé (saisie résultats en texte libre)
+- ✅ ConclusionForm.vue créé (saisie conclusion)
+- ✅ App.vue refactoré (navigation 6 étapes + prévisualisation temps réel)
+- ✅ Build testé : 40.70 KB gzippé (< 200 KB objectif maintenu)
+- ✅ Application complète et fonctionnelle
+- 🎯 Prochaine étape : Phase 5 - Features avancées
 
 ### 23 octobre 2025 - 20:00
 **Phase 3 complétée** : Composables (logique métier)
@@ -275,21 +292,50 @@ src/
     └── reportFormatter.js (Formatage texte)
 ```
 
-#### Phase 4 : Formulaires ⏳ À FAIRE
+#### Phase 4 : Formulaires ✅ TERMINÉE
 **Durée estimée** : 2h
+**Durée réelle** : 1h30
+**Statut** : Complété le 23 octobre 2025
+**Commit** : À venir - Phase 4 : Formulaires - Implémentation complète
 
-**Ordre de création :**
-1. `IndicationSelector.vue` (étape 1)
-2. `CancerSelector.vue` (étape 2)
-3. Formulaires spécifiques (étape 2b) :
-   - `SeinForm.vue`
-   - `OrlForm.vue`
-   - `LymphomeForm.vue`
-   - `MelanomeForm.vue`
-4. `PatientInfo.vue` (étape 3)
-5. `TepComparison.vue` (étape 4)
-6. `ResultsForm.vue` (étape 5)
-7. `ConclusionForm.vue` (étape 6)
+**Réalisations :**
+1. ✅ `IndicationSelector.vue` - Sélection indication avec grandes cartes cliquables
+2. ✅ `CancerSelector.vue` - Cancers fréquents + recherche avec autocomplete
+3. ✅ Formulaires spécifiques par cancer :
+   - `SeinForm.vue` - Côté, histologie, statut RH/HER2, Ki67
+   - `OrlForm.vue` - Topographie, sous-localisation dynamique, HPV
+   - `LymphomeForm.vue` - Type, statut, stade Ann Arbor
+   - `MelanomeForm.vue` - Site primitif, Breslow, mutation
+4. ✅ `PatientInfo.vue` - Âge, sexe, traitement, date traitement
+5. ✅ `TepComparison.vue` - Ajout/suppression TEP antérieurs avec formulaire dynamique
+6. ✅ `ResultsForm.vue` - Saisie résultats en textarea avec aide contextuelle
+7. ✅ `ConclusionForm.vue` - Saisie conclusion avec conseils de rédaction
+8. ✅ `App.vue` refactoré - Navigation 6 étapes + prévisualisation temps réel
+9. ✅ Build testé : 40.70 KB gzippé (excellente performance)
+
+**Résultat :**
+```
+src/components/forms/
+├── IndicationSelector.vue
+├── CancerSelector.vue
+├── PatientInfo.vue
+├── TepComparison.vue
+├── ResultsForm.vue
+├── ConclusionForm.vue
+└── cancer-specific/
+    ├── SeinForm.vue
+    ├── OrlForm.vue
+    ├── LymphomeForm.vue
+    └── MelanomeForm.vue
+```
+
+**Application complète et fonctionnelle avec :**
+- Navigation fluide entre 6 étapes
+- Validation des données avant passage à l'étape suivante
+- Prévisualisation en temps réel du rapport
+- Persistance automatique avec localStorage
+- Formulaires spécifiques affichés dynamiquement selon le cancer
+- Réinitialisation complète du formulaire
 
 #### Phase 5 : Features avancées ⏳ À FAIRE
 **Durée estimée** : 1h
