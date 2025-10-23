@@ -1,8 +1,37 @@
 # Mémoire de projet - Générateur de Comptes Rendus TEP-FDG
 
-**Dernière mise à jour** : 23 octobre 2025
-**Version actuelle** : 0.1.0-alpha (Vanilla JS - en cours de refactoring)
-**Prochaine version** : 1.0.0 (Vue 3 + Vite)
+**Dernière mise à jour** : 23 octobre 2025 - 17:30
+**Version actuelle** : 1.0.0-alpha (Vue 3 + Vite - Phase 1 complétée)
+**Prochaine version** : 1.0.0 (Vue 3 + Vite - en cours)
+
+> **📝 CONSIGNE IMPORTANTE** : Ce fichier doit être mis à jour à chaque avancée significative du projet (fin de phase, ajout de fonctionnalité majeure, changement architectural, etc.). Toujours mettre à jour la date et l'état d'avancement.
+
+---
+
+## 📅 Journal des modifications
+
+### 23 octobre 2025 - 18:00
+**Configuration déploiement automatique**
+- ✅ GitHub Actions configuré (.github/workflows/deploy.yml)
+- ✅ Déploiement automatique uniquement depuis `main`
+- ✅ Stratégie : Chaque PR mergée = déploiement auto
+- 📦 URL déploiement : https://lescientifik.github.io/pet_report/
+- 🔧 Déclenchement manuel disponible (workflow_dispatch)
+
+### 23 octobre 2025 - 17:30
+**Phase 1 complétée** : Setup projet Vue 3 + Vite
+- ✅ Architecture moderne mise en place
+- ✅ Configuration Vite pour GitHub Pages
+- ✅ Structure de dossiers complète
+- ✅ Migration CSS (variables + main)
+- ✅ Build testé : 27 KB gzippé
+- 🎯 Prochaine étape : Phase 2 - Composants de base
+
+### 23 octobre 2025 - 06:16
+**Décision architecturale** : Refactoring complet vers Vue 3 + Vite
+- ❌ Version Vanilla JS abandonnée (bugs, non maintenable)
+- 📝 Documentation complète du plan d'action
+- 🏗️ 6 phases d'implémentation planifiées
 
 ---
 
@@ -142,34 +171,34 @@ pet_report/
 
 ### Phases d'implémentation
 
-#### Phase 1 : Setup projet ⏳ À FAIRE
-**Durée estimée** : 30 min
+#### Phase 1 : Setup projet ✅ TERMINÉE
+**Durée réelle** : 30 min
+**Statut** : Complété le 23 octobre 2025
+**Commit** : `bf8fb5e` - Phase 1 : Setup projet Vue 3 + Vite
 
-**Tâches :**
-1. Initialiser projet Vite + Vue 3
-2. Configurer vite.config.js pour GitHub Pages
-3. Créer structure dossiers
-4. Setup package.json avec scripts
-5. Migrer variables CSS vers assets/styles/
-6. Premier commit avec base fonctionnelle
+**Réalisations :**
+1. ✅ Projet Vite + Vue 3 initialisé
+2. ✅ vite.config.js configuré (base: '/pet_report/', alias @, vendor chunks)
+3. ✅ Structure complète des dossiers créée
+4. ✅ package.json avec scripts (dev, build, preview, deploy)
+5. ✅ CSS migré vers assets/styles/ (variables.css + main.css)
+6. ✅ Fichiers de base créés (App.vue, main.js, index.html)
+7. ✅ Ancienne version sauvegardée (*.old.*)
+8. ✅ Build testé : ~27 KB gzippé ✅
 
-**Commandes :**
-```bash
-npm create vite@latest . -- --template vue
-npm install
-npm run dev
+**Résultat :**
+```
+src/
+├── components/forms/cancer-specific/
+├── components/ui/
+├── composables/
+├── utils/
+├── assets/styles/
+├── App.vue (page de statut temporaire)
+└── main.js
 ```
 
-**Configuration Vite :**
-```js
-// vite.config.js
-export default {
-  base: '/pet_report/',
-  build: { outDir: 'dist' }
-}
-```
-
-#### Phase 2 : Composants de base ⏳ À FAIRE
+#### Phase 2 : Composants de base ⏳ EN COURS
 **Durée estimée** : 1h
 
 **Ordre de création :**
@@ -558,6 +587,14 @@ export default defineConfig({
 ```
 
 #### Workflow déploiement
+
+**Déploiement automatique via GitHub Actions :**
+- ✅ Configuré dans `.github/workflows/deploy.yml`
+- ✅ Se déclenche automatiquement sur push vers `main`
+- ✅ Workflow : PR mergée → Build auto → Déploiement auto
+- ✅ URL de production : https://lescientifik.github.io/pet_report/
+
+**Développement local :**
 ```bash
 # Développement local
 npm run dev
@@ -567,10 +604,17 @@ npm run build
 
 # Test build localement
 npm run preview
-
-# Déployer sur GitHub Pages
-npm run deploy
 ```
+
+**Déploiement manuel (si nécessaire) :**
+- Via GitHub UI : Actions → Deploy to GitHub Pages → Run workflow
+- Le déploiement automatique rend cette option rarement nécessaire
+
+**Stratégie de déploiement :**
+1. Développement sur branche `claude/*`
+2. Création d'une Pull Request
+3. Merge vers `main` → **Déploiement automatique**
+4. Chaque phase = 1 PR = 1 déploiement
 
 ---
 
