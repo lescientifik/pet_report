@@ -37,7 +37,7 @@ Application web statique pour faciliter et standardiser la rédaction de comptes
 
 ### Ouvrir le site
 
-Ouvrez simplement `index.html` dans votre navigateur ou déployez sur GitHub Pages.
+Démarrez le serveur de développement avec `npm run dev` ou déployez sur GitHub Pages.
 
 ### Workflow type
 
@@ -57,9 +57,9 @@ Ouvrez simplement `index.html` dans votre navigateur ou déployez sur GitHub Pag
 
 ## Architecture technique
 
-- **HTML5** : Structure sémantique
+- **Vue 3** : Framework réactif avec Composition API
+- **Vite** : Build tool et serveur de développement rapide
 - **CSS3** : Design responsive avec variables CSS (préparation multi-traceurs)
-- **JavaScript vanilla** : Aucune dépendance externe
 - **localStorage** : Sauvegarde locale uniquement (respect RGPD)
 
 ## Évolutions prévues
@@ -87,21 +87,45 @@ Ouvrez simplement `index.html` dans votre navigateur ou déployez sur GitHub Pag
 
 ## Développement local
 
-Aucune installation requise. Ouvrez simplement `index.html` dans votre navigateur.
+### Installation
 
-Pour le développement :
+**IMPORTANT** : Avant de lancer l'application, installez les dépendances :
+
 ```bash
-# Serveur HTTP simple
-python -m http.server 8000
-# ou
-npx serve
+npm install
 ```
+
+### Démarrer le serveur de développement
+
+```bash
+npm run dev
+```
+
+L'application sera accessible sur `http://localhost:5173/pet_report/`
+
+### Build pour production
+
+```bash
+npm run build
+```
+
+Les fichiers optimisés seront générés dans le dossier `dist/`
 
 ## Déploiement GitHub Pages
 
-1. Push sur la branche principale
-2. Activer GitHub Pages dans Settings > Pages
-3. Sélectionner la branche et le dossier root
+### Méthode automatique
+
+```bash
+npm run deploy
+```
+
+Cette commande build l'application et la déploie automatiquement sur GitHub Pages.
+
+### Méthode manuelle
+
+1. Build l'application : `npm run build`
+2. Push le dossier `dist/` sur la branche `gh-pages`
+3. Activer GitHub Pages dans Settings > Pages
 4. L'URL sera : `https://[username].github.io/[repo-name]/`
 
 ## Licence
