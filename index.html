@@ -90,6 +90,121 @@
                     </div>
                 </section>
 
+                <!-- Étape 2b: Détails spécifiques au cancer -->
+                <section id="step2b" class="form-step">
+                    <h2>2b. Détails spécifiques</h2>
+
+                    <!-- Sein -->
+                    <div id="cancer-sein" class="cancer-specific-form hidden">
+                        <div class="form-section">
+                            <label class="section-label">Côté</label>
+                            <div class="button-group">
+                                <button type="button" class="btn-option" data-field="cote" data-value="gauche">Gauche</button>
+                                <button type="button" class="btn-option" data-field="cote" data-value="droit">Droit</button>
+                                <button type="button" class="btn-option" data-field="cote" data-value="bilatéral">Bilatéral</button>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <label class="section-label">Type histologique (optionnel)</label>
+                            <div class="button-group">
+                                <button type="button" class="btn-option" data-field="histologie" data-value="canalaire">Canalaire</button>
+                                <button type="button" class="btn-option" data-field="histologie" data-value="lobulaire">Lobulaire</button>
+                                <button type="button" class="btn-option" data-field="histologie" data-value="autre">Autre</button>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <label class="section-label">Statut (optionnel)</label>
+                            <div class="button-group">
+                                <button type="button" class="btn-option" data-field="statut" data-value="RH+">RH+</button>
+                                <button type="button" class="btn-option" data-field="statut" data-value="HER2+">HER2+</button>
+                                <button type="button" class="btn-option" data-field="statut" data-value="triple négatif">Triple négatif</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ki67">Ki67 (optionnel)</label>
+                            <input type="text" id="ki67" placeholder="Ex: 30%">
+                        </div>
+                    </div>
+
+                    <!-- Mélanome -->
+                    <div id="cancer-melanome" class="cancer-specific-form hidden">
+                        <div class="form-section">
+                            <label class="section-label">Site primitif (optionnel)</label>
+                            <div class="button-group">
+                                <button type="button" class="btn-option" data-field="site" data-value="cutané">Cutané</button>
+                                <button type="button" class="btn-option" data-field="site" data-value="muqueux">Muqueux</button>
+                                <button type="button" class="btn-option" data-field="site" data-value="uvéal">Uvéal</button>
+                                <button type="button" class="btn-option" data-field="site" data-value="inconnu">Inconnu</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="breslow">Indice de Breslow (optionnel)</label>
+                            <input type="text" id="breslow" placeholder="Ex: 2.5mm">
+                        </div>
+                    </div>
+
+                    <!-- ORL -->
+                    <div id="cancer-orl" class="cancer-specific-form hidden">
+                        <div class="form-section">
+                            <label class="section-label">Topographie</label>
+                            <div class="button-group wrap">
+                                <button type="button" class="btn-option" data-field="topographie" data-value="cavité buccale">Cavité buccale</button>
+                                <button type="button" class="btn-option" data-field="topographie" data-value="oropharynx">Oropharynx</button>
+                                <button type="button" class="btn-option" data-field="topographie" data-value="hypopharynx">Hypopharynx</button>
+                                <button type="button" class="btn-option" data-field="topographie" data-value="larynx">Larynx</button>
+                                <button type="button" class="btn-option" data-field="topographie" data-value="nasopharynx">Nasopharynx</button>
+                                <button type="button" class="btn-option" data-field="topographie" data-value="glandes salivaires">Glandes salivaires</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sous_localisation">Sous-localisation précise (optionnel)</label>
+                            <input type="text" id="sous_localisation" placeholder="Ex: base de langue, amygdale...">
+                        </div>
+
+                        <div class="form-section">
+                            <label class="section-label">Statut HPV (optionnel)</label>
+                            <div class="button-group">
+                                <button type="button" class="btn-option" data-field="hpv" data-value="HPV+">HPV+</button>
+                                <button type="button" class="btn-option" data-field="hpv" data-value="HPV-">HPV-</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lymphome -->
+                    <div id="cancer-lymphome" class="cancer-specific-form hidden">
+                        <div class="form-section">
+                            <label class="section-label">Type de lymphome</label>
+                            <div class="button-group wrap">
+                                <button type="button" class="btn-option" data-field="type_lymphome" data-value="lymphome de Hodgkin">Hodgkin</button>
+                                <button type="button" class="btn-option" data-field="type_lymphome" data-value="lymphome B diffus à grandes cellules">LBDGC</button>
+                                <button type="button" class="btn-option" data-field="type_lymphome" data-value="lymphome folliculaire">Folliculaire</button>
+                                <button type="button" class="btn-option" data-field="type_lymphome" data-value="lymphome du MALT">MALT</button>
+                                <button type="button" class="btn-option" data-field="type_lymphome" data-value="lymphome du manteau">Manteau</button>
+                                <button type="button" class="btn-option" data-field="type_lymphome" data-value="lymphome T">Lymphome T</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="autre_type_lymphome">Autre type (optionnel)</label>
+                            <input type="text" id="autre_type_lymphome" placeholder="Préciser si autre...">
+                        </div>
+
+                        <div class="form-section">
+                            <label class="section-label">Statut (optionnel)</label>
+                            <div class="button-group">
+                                <button type="button" class="btn-option" data-field="statut_lymphome" data-value="au diagnostic">Diagnostic</button>
+                                <button type="button" class="btn-option" data-field="statut_lymphome" data-value="en rémission">Rémission</button>
+                                <button type="button" class="btn-option" data-field="statut_lymphome" data-value="en rechute">Rechute</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
                 <!-- Étape 3: Détails patient et traitement -->
                 <section id="step3" class="form-step">
                     <h2>3. Informations patient</h2>
