@@ -1,7 +1,7 @@
 # Mémoire de projet - Générateur de Comptes Rendus TEP-FDG
 
-**Dernière mise à jour** : 23 octobre 2025 - 17:30
-**Version actuelle** : 1.0.0-alpha (Vue 3 + Vite - Phase 1 complétée)
+**Dernière mise à jour** : 23 octobre 2025 - 19:00
+**Version actuelle** : 1.0.0-alpha (Vue 3 + Vite - Phase 2 complétée)
 **Prochaine version** : 1.0.0 (Vue 3 + Vite - en cours)
 
 > **📝 CONSIGNE IMPORTANTE** : Ce fichier doit être mis à jour à chaque avancée significative du projet (fin de phase, ajout de fonctionnalité majeure, changement architectural, etc.). Toujours mettre à jour la date et l'état d'avancement.
@@ -9,6 +9,18 @@
 ---
 
 ## 📅 Journal des modifications
+
+### 23 octobre 2025 - 19:00
+**Phase 2 complétée** : Composants de base
+- ✅ ButtonGroup.vue créé (sélection multiple réutilisable)
+- ✅ FormStep.vue créé (wrapper pour étapes)
+- ✅ Preview.vue créé (prévisualisation + copie presse-papier)
+- ✅ AppLayout.vue créé (layout principal responsive)
+- ✅ App.vue refactoré avec démo fonctionnelle
+- ✅ Build testé : 31.5 KB gzippé (< 200 KB objectif)
+- ✅ Navigation entre étapes fonctionnelle
+- ✅ Prévisualisation temps réel opérationnelle
+- 🎯 Prochaine étape : Phase 3 - Composables (logique métier)
 
 ### 23 octobre 2025 - 18:00
 **Configuration déploiement automatique**
@@ -198,14 +210,30 @@ src/
 └── main.js
 ```
 
-#### Phase 2 : Composants de base ⏳ EN COURS
+#### Phase 2 : Composants de base ✅ TERMINÉE
 **Durée estimée** : 1h
+**Durée réelle** : 45 min
+**Statut** : Complété le 23 octobre 2025
+**Commit** : `2750975` - Phase 2 : Composants de base - Implémentation complète
 
-**Ordre de création :**
-1. `App.vue` - Layout principal (header, main, preview)
-2. `FormStep.vue` - Wrapper réutilisable pour chaque étape
-3. `ButtonGroup.vue` - Composant boutons sélection rapide
-4. `Preview.vue` - Zone prévisualisation + bouton copie
+**Réalisations :**
+1. ✅ `ButtonGroup.vue` - Composant réutilisable pour sélection multiple avec v-model
+2. ✅ `FormStep.vue` - Wrapper simple pour gérer l'affichage conditionnel des étapes
+3. ✅ `Preview.vue` - Zone de prévisualisation avec copie presse-papier et Ctrl+Enter
+4. ✅ `AppLayout.vue` - Layout principal avec grille responsive (2 colonnes sur desktop)
+5. ✅ `App.vue` - Refactoré avec démo fonctionnelle des composants
+6. ✅ Navigation entre étapes implémentée
+7. ✅ Prévisualisation temps réel fonctionnelle
+8. ✅ Build testé : 31.5 KB gzippé (objectif < 200 KB atteint)
+
+**Résultat :**
+```
+src/components/ui/
+├── AppLayout.vue (Layout principal)
+├── ButtonGroup.vue (Sélection multiple)
+├── FormStep.vue (Wrapper étapes)
+└── Preview.vue (Prévisualisation + copie)
+```
 
 #### Phase 3 : Composables (logique métier) ⏳ À FAIRE
 **Durée estimée** : 1h
