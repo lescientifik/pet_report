@@ -59,7 +59,7 @@ function handleSearchSelect() {
           v-for="option in CANCERS_FREQUENTS"
           :key="option.value"
           class="cancer-card"
-          :class="{ active: cancer === option.value }"
+          :class="{ active: cancer.value === option.value }"
           @click="selectCancer(option.value)"
         >
           <div class="cancer-icon">{{ option.icon }}</div>
@@ -114,8 +114,8 @@ function handleSearchSelect() {
       </div>
 
       <!-- Affichage du cancer sélectionné -->
-      <div v-if="cancer" class="selected-cancer">
-        <strong>Cancer sélectionné :</strong> {{ cancer }}
+      <div v-if="cancer.value" class="selected-cancer">
+        <strong>Cancer sélectionné :</strong> {{ cancer.value }}
       </div>
     </div>
   </div>
