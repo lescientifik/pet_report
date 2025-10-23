@@ -2,6 +2,7 @@
 const appState = {
     indication: '',
     cancer: '',
+    cancerDetails: {}, // Détails spécifiques selon le type de cancer
     age: '',
     sexe: '',
     traitement: '',
@@ -120,6 +121,23 @@ function initEventListeners() {
         });
     });
 
+    // Boutons options pour détails spécifiques cancer
+    document.querySelectorAll('.btn-option').forEach(btn => {
+        btn.addEventListener('click', (e) => handleOptionClick(e.currentTarget));
+    });
+
+    // Champs texte spécifiques cancer
+    const specificFields = ['ki67', 'breslow', 'sous_localisation', 'autre_type_lymphome'];
+    specificFields.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.addEventListener('input', (e) => {
+                appState.cancerDetails[id] = e.target.value;
+                updatePreview();
+            });
+        }
+    });
+
     // Comparaison TEP
     document.getElementById('hasComparison').addEventListener('change', (e) => {
         appState.hasComparison = e.target.checked;
@@ -171,12 +189,12 @@ function selectCancer(cancer) {
         showSidebar(cancer);
     }
 
+    // Afficher le formulaire spécifique si disponible
+    showCancerSpecificForm(cancer);
+
     // Passer à l'étape suivante
     showStep(3);
     updatePreview();
-
-    // Focus sur le champ âge
-    setTimeout(() => document.getElementById('age').focus(), 100);
 }
 
 // Affichage des étapes
@@ -192,6 +210,69 @@ function showStep(stepNumber) {
             step.classList.remove('active');
         }
     }
+}
+
+// Affichage du formulaire spécifique selon le cancer
+function showCancerSpecificForm(cancer) {
+    // Masquer tous les formulaires spécifiques
+    document.querySelectorAll('.cancer-specific-form').forEach(form => {
+        form.classList.add('hidden');
+    });
+
+    // Réinitialiser les détails du cancer
+    appState.cancerDetails = {};
+
+    // Mapper les noms de cancer aux IDs de formulaire
+    const cancerFormMap = {
+        'cancer du sein': 'cancer-sein',
+        'mélanome': 'cancer-melanome',
+        'cancer ORL': 'cancer-orl',
+        'cancer orl': 'cancer-orl',
+        'lymphome': 'cancer-lymphome'
+    };
+
+    const formId = cancerFormMap[cancer.toLowerCase()];
+
+    if (formId) {
+        const form = document.getElementById(formId);
+        if (form) {
+            form.classList.remove('hidden');
+            // Afficher l'étape 2b
+            document.getElementById('step2b').classList.add('active');
+        }
+    } else {
+        // Si pas de formulaire spécifique, masquer l'étape 2b
+        document.getElementById('step2b').classList.remove('active');
+    }
+}
+
+// Gestion du clic sur les boutons options
+function handleOptionClick(button) {
+    const field = button.dataset.field;
+    const value = button.dataset.value;
+
+    // Désélectionner les autres boutons du même groupe
+    const parent = button.closest('.button-group');
+    if (parent) {
+        parent.querySelectorAll('.btn-option').forEach(btn => {
+            if (btn.dataset.field === field) {
+                btn.classList.remove('selected');
+            }
+        });
+    }
+
+    // Sélectionner ce bouton ou le désélectionner si déjà sélectionné
+    if (appState.cancerDetails[field] === value) {
+        // Désélectionner
+        button.classList.remove('selected');
+        delete appState.cancerDetails[field];
+    } else {
+        // Sélectionner
+        button.classList.add('selected');
+        appState.cancerDetails[field] = value;
+    }
+
+    updatePreview();
 }
 
 // Gestion des comparaisons TEP
@@ -273,6 +354,57 @@ function updateTepComparison(id, field, value) {
     }
 }
 
+// Construction du texte des détails spécifiques du cancer
+function buildCancerDetailsText() {
+    const details = appState.cancerDetails;
+    let text = '';
+
+    // Cancer du sein
+    if (details.cote) {
+        text += `${details.cote}`;
+    }
+    if (details.histologie) {
+        text += text ? `, de type ${details.histologie}` : `de type ${details.histologie}`;
+    }
+    if (details.statut) {
+        text += text ? `, ${details.statut}` : details.statut;
+    }
+    if (details.ki67) {
+        text += text ? `, Ki67 à ${details.ki67}` : `Ki67 à ${details.ki67}`;
+    }
+
+    // Mélanome
+    if (details.site) {
+        text += `${details.site}`;
+    }
+    if (details.breslow) {
+        text += text ? `, Breslow ${details.breslow}` : `Breslow ${details.breslow}`;
+    }
+
+    // ORL
+    if (details.topographie) {
+        text += `de ${details.topographie}`;
+        if (details.sous_localisation) {
+            text += ` (${details.sous_localisation})`;
+        }
+    }
+    if (details.hpv) {
+        text += text ? `, ${details.hpv}` : details.hpv;
+    }
+
+    // Lymphome
+    if (details.type_lymphome) {
+        text = details.type_lymphome;
+    } else if (details.autre_type_lymphome) {
+        text = details.autre_type_lymphome;
+    }
+    if (details.statut_lymphome) {
+        text += text ? ` ${details.statut_lymphome}` : details.statut_lymphome;
+    }
+
+    return text;
+}
+
 // Génération du texte
 function generateReport() {
     let report = '';
@@ -289,6 +421,12 @@ function generateReport() {
 
         report += `INDICATION\n\n`;
         report += `${sexe} de ${appState.age} ans adressé${appState.sexe === 'F' ? 'e' : ''} pour ${indicationText[appState.indication]} d'un ${appState.cancer}`;
+
+        // Ajouter les détails spécifiques du cancer
+        const cancerDetailsText = buildCancerDetailsText();
+        if (cancerDetailsText) {
+            report += ` ${cancerDetailsText}`;
+        }
 
         if (appState.traitement && appState.dateTraitement) {
             report += `, traité${appState.sexe === 'F' ? 'e' : ''} par ${appState.traitement} depuis ${appState.dateTraitement}`;
@@ -509,6 +647,8 @@ function resetForm() {
                 appState[key] = [];
             } else if (key === 'hasComparison') {
                 appState[key] = false;
+            } else if (key === 'cancerDetails') {
+                appState[key] = {};
             } else {
                 appState[key] = '';
             }
@@ -516,12 +656,17 @@ function resetForm() {
 
         // Réinitialiser l'interface
         document.querySelectorAll('.indication-card, .cancer-card').forEach(c => c.classList.remove('selected'));
+        document.querySelectorAll('.btn-option').forEach(btn => btn.classList.remove('selected'));
         document.querySelectorAll('input[type="text"], input[type="number"], textarea').forEach(input => input.value = '');
         document.getElementById('sexe').value = '';
         document.getElementById('cancerInput').value = '';
         document.getElementById('hasComparison').checked = false;
         document.getElementById('tepList').innerHTML = '';
         toggleComparisonSection(false);
+
+        // Masquer les formulaires spécifiques et le step2b
+        document.querySelectorAll('.cancer-specific-form').forEach(form => form.classList.add('hidden'));
+        document.getElementById('step2b').classList.remove('active');
 
         // Masquer le sidebar
         document.getElementById('sidebar').classList.add('hidden');

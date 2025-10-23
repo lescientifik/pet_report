@@ -501,3 +501,85 @@ label:has(input[type="checkbox"]) {
     cursor: pointer;
     font-weight: 600;
 }
+
+/* Formulaires spécifiques par cancer */
+.cancer-specific-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    animation: fadeIn 0.3s ease;
+}
+
+.form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.section-label {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+}
+
+/* Groupes de boutons pour sélection rapide */
+.button-group {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+}
+
+.button-group.wrap {
+    flex-wrap: wrap;
+}
+
+.btn-option {
+    flex: 1;
+    min-width: fit-content;
+    padding: 0.75rem 1.25rem;
+    background: white;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--text-primary);
+    font-family: inherit;
+    white-space: nowrap;
+}
+
+.btn-option:hover {
+    border-color: var(--primary-color);
+    background-color: #eff6ff;
+}
+
+.btn-option.selected {
+    border-color: var(--primary-color);
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 600;
+}
+
+.btn-option:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+/* Responsive pour les boutons options */
+@media (max-width: 768px) {
+    .button-group {
+        flex-wrap: wrap;
+    }
+
+    .btn-option {
+        flex: 1 1 calc(50% - 0.25rem);
+        min-width: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    .btn-option {
+        flex: 1 1 100%;
+    }
+}
