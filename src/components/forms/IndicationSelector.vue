@@ -19,8 +19,8 @@ const { indication } = useReportState()
           v-for="option in INDICATIONS"
           :key="option.value"
           class="indication-card"
-          :class="{ active: indication === option.value }"
-          @click="indication = option.value"
+          :class="{ active: indication.value === option.value }"
+          @click="indication.value = option.value"
         >
           <div class="indication-icon">{{ option.icon }}</div>
           <div class="indication-label">{{ option.label }}</div>

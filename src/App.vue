@@ -96,7 +96,7 @@ function resetForm() {
 
         <!-- Étape 1 : Indication -->
         <FormStep
-          :active="state.currentStep === 1"
+          :active="state.currentStep.value === 1"
           title="Étape 1 : Indication"
         >
           <IndicationSelector />
@@ -104,7 +104,7 @@ function resetForm() {
 
         <!-- Étape 2 : Type de cancer + formulaire spécifique -->
         <FormStep
-          :active="state.currentStep === 2"
+          :active="state.currentStep.value === 2"
           title="Étape 2 : Type de cancer"
         >
           <div class="step-content">
@@ -119,7 +119,7 @@ function resetForm() {
 
         <!-- Étape 3 : Informations patient -->
         <FormStep
-          :active="state.currentStep === 3"
+          :active="state.currentStep.value === 3"
           title="Étape 3 : Informations patient"
         >
           <PatientInfo />
@@ -127,7 +127,7 @@ function resetForm() {
 
         <!-- Étape 4 : Comparaisons TEP -->
         <FormStep
-          :active="state.currentStep === 4"
+          :active="state.currentStep.value === 4"
           title="Étape 4 : Comparaisons TEP antérieurs (optionnel)"
         >
           <TepComparison />
@@ -135,7 +135,7 @@ function resetForm() {
 
         <!-- Étape 5 : Résultats -->
         <FormStep
-          :active="state.currentStep === 5"
+          :active="state.currentStep.value === 5"
           title="Étape 5 : Résultats"
         >
           <ResultsForm />
@@ -143,7 +143,7 @@ function resetForm() {
 
         <!-- Étape 6 : Conclusion -->
         <FormStep
-          :active="state.currentStep === 6"
+          :active="state.currentStep.value === 6"
           title="Étape 6 : Conclusion"
         >
           <ConclusionForm />
@@ -152,7 +152,7 @@ function resetForm() {
         <!-- Boutons de navigation -->
         <div class="form-navigation">
           <button
-            v-if="state.currentStep > 1"
+            v-if="state.currentStep.value > 1"
             class="btn-secondary"
             @click="prevStep"
           >
@@ -167,9 +167,9 @@ function resetForm() {
           </button>
 
           <button
-            v-if="state.currentStep < 6"
+            v-if="state.currentStep.value < 6"
             class="btn-primary"
-            :disabled="state.currentStep === 2 && !canGoToStep3"
+            :disabled="state.currentStep.value === 2 && !canGoToStep3"
             @click="nextStep"
           >
             Étape suivante →
