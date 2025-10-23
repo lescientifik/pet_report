@@ -90,7 +90,7 @@ function resetForm() {
         <div class="form-header">
           <h1 class="form-title">Générateur de Comptes Rendus TEP-FDG</h1>
           <div class="step-indicator">
-            Étape {{ state.currentStep }} / 6
+            Étape {{ state.currentStep.value }} / 6
           </div>
         </div>
 
