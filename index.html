@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Générateur de Compte Rendu TEP-FDG</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar contextuel -->
+        <aside id="sidebar" class="sidebar hidden">
+            <button id="closeSidebar" class="close-btn">&times;</button>
+            <h2>Aide à l'interprétation</h2>
+            <div id="sidebarContent">
+                <p class="placeholder">Sélectionnez un type de cancer pour afficher les ressources</p>
+            </div>
+        </aside>
+
+        <!-- Zone principale -->
+        <main class="main-content">
+            <header>
+                <h1>📊 TEP-FDG - Générateur de Compte Rendu</h1>
+                <button id="resetBtn" class="btn-secondary">🔄 Nouveau CR</button>
+            </header>
+
+            <!-- Formulaire progressif -->
+            <div class="form-container">
+                <!-- Étape 1: Indication -->
+                <section id="step1" class="form-step active">
+                    <h2>1. Indication</h2>
+                    <div class="indication-grid">
+                        <button class="indication-card" data-indication="bilan">
+                            <span class="icon">🔍</span>
+                            <span class="label">Bilan initial</span>
+                        </button>
+                        <button class="indication-card" data-indication="reevaluation">
+                            <span class="icon">📈</span>
+                            <span class="label">Réévaluation</span>
+                        </button>
+                        <button class="indication-card" data-indication="surveillance">
+                            <span class="icon">👁️</span>
+                            <span class="label">Surveillance</span>
+                        </button>
+                        <button class="indication-card" data-indication="recidive">
+                            <span class="icon">🔎</span>
+                            <span class="label">Recherche de récidive</span>
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Étape 2: Type de cancer -->
+                <section id="step2" class="form-step">
+                    <h2>2. Type de cancer</h2>
+                    <div class="cancer-section">
+                        <!-- Cancers fréquents en icônes -->
+                        <div class="cancer-quick-select">
+                            <button class="cancer-card" data-cancer="cancer du sein">
+                                <span class="icon">🎗️</span>
+                                <span class="label">Sein</span>
+                            </button>
+                            <button class="cancer-card" data-cancer="mélanome">
+                                <span class="icon">⚫</span>
+                                <span class="label">Mélanome</span>
+                            </button>
+                            <button class="cancer-card" data-cancer="cancer ORL">
+                                <span class="icon">👤</span>
+                                <span class="label">ORL</span>
+                            </button>
+                            <button class="cancer-card" data-cancer="lymphome">
+                                <span class="icon">🩸</span>
+                                <span class="label">Lymphome</span>
+                            </button>
+                        </div>
+                        <!-- Recherche pour autres cancers -->
+                        <div class="cancer-search">
+                            <label for="cancerInput">Ou saisir un autre cancer :</label>
+                            <input type="text" id="cancerInput" placeholder="Ex: cancer du poumon, cancer colorectal..." list="cancerList">
+                            <datalist id="cancerList">
+                                <option value="cancer du poumon">
+                                <option value="cancer colorectal">
+                                <option value="cancer de l'ovaire">
+                                <option value="cancer de la prostate">
+                                <option value="cancer gastrique">
+                                <option value="cancer du pancréas">
+                                <option value="cancer de la thyroïde">
+                                <option value="sarcome">
+                            </datalist>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Étape 3: Détails patient et traitement -->
+                <section id="step3" class="form-step">
+                    <h2>3. Informations patient</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="age">Âge</label>
+                            <input type="number" id="age" placeholder="Ex: 65" min="0" max="120">
+                        </div>
+                        <div class="form-group">
+                            <label for="sexe">Sexe</label>
+                            <select id="sexe">
+                                <option value="">--</option>
+                                <option value="M">Homme</option>
+                                <option value="F">Femme</option>
+                            </select>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="traitement">Traitement en cours (optionnel)</label>
+                            <input type="text" id="traitement" placeholder="Ex: chimiothérapie, immunothérapie...">
+                        </div>
+                        <div class="form-group">
+                            <label for="dateTraitement">Date de début</label>
+                            <input type="text" id="dateTraitement" placeholder="Ex: 2024, 01/2024, 15/01/2024">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Étape 4: TEP antérieurs -->
+                <section id="step4" class="form-step">
+                    <h2>4. Comparaison avec TEP antérieur(s)</h2>
+                    <div class="tep-comparison">
+                        <label>
+                            <input type="checkbox" id="hasComparison">
+                            Comparaison avec TEP antérieur(s)
+                        </label>
+                        <div id="tepList" class="tep-list hidden">
+                            <!-- Les TEP seront ajoutés dynamiquement -->
+                        </div>
+                        <button id="addTepBtn" class="btn-secondary hidden">+ Ajouter un TEP</button>
+                    </div>
+                </section>
+
+                <!-- Étape 5: Résultats -->
+                <section id="step5" class="form-step">
+                    <h2>5. Résultats</h2>
+                    <div class="form-group">
+                        <textarea id="resultats" rows="8" placeholder="Saisir les résultats du TEP..."></textarea>
+                    </div>
+                </section>
+
+                <!-- Étape 6: Conclusion -->
+                <section id="step6" class="form-step">
+                    <h2>6. Conclusion</h2>
+                    <div class="form-group">
+                        <textarea id="conclusion" rows="4" placeholder="Saisir la conclusion..."></textarea>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Zone de prévisualisation -->
+            <div class="preview-container">
+                <div class="preview-header">
+                    <h2>Prévisualisation</h2>
+                    <button id="copyBtn" class="btn-primary" disabled>
+                        📋 Copier le compte rendu
+                    </button>
+                </div>
+                <div id="preview" class="preview-content">
+                    <p class="placeholder">Le compte rendu apparaîtra ici au fur et à mesure...</p>
+                </div>
+                <div id="copyFeedback" class="copy-feedback hidden">✓ Copié !</div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
