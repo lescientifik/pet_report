@@ -56,6 +56,8 @@ export function buildIndicationText(state) {
 
 // ===== DÉTAILS CANCER =====
 function buildCancerDetailsText(cancer, details) {
+  if (!cancer) return ''
+
   const cancerLower = cancer.toLowerCase()
 
   if (cancerLower === 'cancer du sein') {
