@@ -28,9 +28,10 @@ const state = useReportState()
 const { report } = useReportGenerator()
 const storage = useLocalStorage()
 
-// Charger les données sauvegardées au démarrage
+// Charger les données sauvegardées au démarrage et activer l'auto-save
 onMounted(() => {
   storage.load()
+  storage.enableAutoSave()
 })
 
 // Détermine quel formulaire cancer afficher

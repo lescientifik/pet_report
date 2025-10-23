@@ -117,6 +117,7 @@ export function useCancerResources() {
 
   // Ressources pour le cancer sélectionné
   const currentResources = computed(() => {
+    if (!cancer.value) return null
     const cancerLower = cancer.value.toLowerCase()
     return RESOURCES_DATABASE[cancerLower] || null
   })
