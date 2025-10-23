@@ -3,7 +3,8 @@ import { ref } from 'vue'
 import { useReportState } from '@/composables/useReportState'
 import { CANCERS_FREQUENTS } from '@/utils/constants'
 
-const { cancer } = useReportState()
+const state = useReportState()
+const { cancer } = state
 const searchQuery = ref('')
 const showSearch = ref(false)
 
@@ -31,9 +32,16 @@ const allCancers = [
 ]
 
 function selectCancer(value) {
+  console.log('=== CANCER SELECTED ===')
+  console.log('Cancer choisi:', value)
+  console.log('Valeur avant:', cancer.value)
+
   cancer.value = value
   showSearch.value = false
   searchQuery.value = ''
+
+  console.log('Valeur après:', cancer.value)
+  console.log('====================')
 }
 
 function handleSearchSelect() {

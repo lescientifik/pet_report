@@ -1,17 +1,27 @@
 <script setup>
 import { useReportState } from '@/composables/useReportState'
 import { INDICATIONS } from '@/utils/constants'
-import ButtonGroup from '@/components/ui/ButtonGroup.vue'
 
 const state = useReportState()
+// Destructurer les refs pour les utiliser dans le template
 const { indication } = state
 
 function selectIndication(value) {
+  console.log('=== CLICK DETECTED ===')
+  console.log('Option sélectionnée:', value)
+  console.log('Valeur avant:', indication.value)
+  console.log('Type de indication:', typeof indication, indication)
+
   indication.value = value
+
+  console.log('Valeur après:', indication.value)
+  console.log('===================')
+
   // Navigation automatique vers l'étape suivante
   setTimeout(() => {
+    console.log('Navigation automatique vers étape', state.currentStep.value + 1)
     state.nextStep()
-  }, 300) // Petit délai pour que l'utilisateur voie la sélection
+  }, 300)
 }
 </script>
 
