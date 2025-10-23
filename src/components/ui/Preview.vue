@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 
-defineProps({
+const props = defineProps({
   content: {
     type: String,
     default: ''
@@ -36,7 +36,7 @@ function showCopyFeedback() {
 function handleKeydown(event) {
   if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
     event.preventDefault()
-    copyToClipboard(content.value)
+    copyToClipboard(props.content)
   }
 }
 
@@ -52,8 +52,8 @@ defineExpose({
       <h2>Prévisualisation</h2>
       <button
         class="btn-primary"
-        :disabled="!content"
-        @click="copyToClipboard(content)"
+        :disabled="!props.content"
+        @click="copyToClipboard(props.content)"
         title="Copier dans le presse-papier (Ctrl+Enter)"
       >
         Copier (Ctrl+Enter)
@@ -61,11 +61,11 @@ defineExpose({
     </div>
 
     <div class="preview-content">
-      <div v-if="!content" class="placeholder">
-        {{ placeholder }}
+      <div v-if="!props.content" class="placeholder">
+        {{ props.placeholder }}
       </div>
       <div v-else>
-        {{ content }}
+        {{ props.content }}
       </div>
     </div>
 
