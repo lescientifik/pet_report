@@ -10,6 +10,14 @@
 
 ## 📅 Journal des modifications
 
+### 23 octobre 2025 - 18:00
+**Configuration déploiement automatique**
+- ✅ GitHub Actions configuré (.github/workflows/deploy.yml)
+- ✅ Déploiement automatique uniquement depuis `main`
+- ✅ Stratégie : Chaque PR mergée = déploiement auto
+- 📦 URL déploiement : https://lescientifik.github.io/pet_report/
+- 🔧 Déclenchement manuel disponible (workflow_dispatch)
+
 ### 23 octobre 2025 - 17:30
 **Phase 1 complétée** : Setup projet Vue 3 + Vite
 - ✅ Architecture moderne mise en place
@@ -579,6 +587,14 @@ export default defineConfig({
 ```
 
 #### Workflow déploiement
+
+**Déploiement automatique via GitHub Actions :**
+- ✅ Configuré dans `.github/workflows/deploy.yml`
+- ✅ Se déclenche automatiquement sur push vers `main`
+- ✅ Workflow : PR mergée → Build auto → Déploiement auto
+- ✅ URL de production : https://lescientifik.github.io/pet_report/
+
+**Développement local :**
 ```bash
 # Développement local
 npm run dev
@@ -588,10 +604,17 @@ npm run build
 
 # Test build localement
 npm run preview
-
-# Déployer sur GitHub Pages
-npm run deploy
 ```
+
+**Déploiement manuel (si nécessaire) :**
+- Via GitHub UI : Actions → Deploy to GitHub Pages → Run workflow
+- Le déploiement automatique rend cette option rarement nécessaire
+
+**Stratégie de déploiement :**
+1. Développement sur branche `claude/*`
+2. Création d'une Pull Request
+3. Merge vers `main` → **Déploiement automatique**
+4. Chaque phase = 1 PR = 1 déploiement
 
 ---
 
