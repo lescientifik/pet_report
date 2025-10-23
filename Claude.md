@@ -1,7 +1,7 @@
 # Mémoire de projet - Générateur de Comptes Rendus TEP-FDG
 
-**Dernière mise à jour** : 23 octobre 2025 - 19:00
-**Version actuelle** : 1.0.0-alpha (Vue 3 + Vite - Phase 2 complétée)
+**Dernière mise à jour** : 23 octobre 2025 - 20:00
+**Version actuelle** : 1.0.0-alpha (Vue 3 + Vite - Phase 3 complétée)
 **Prochaine version** : 1.0.0 (Vue 3 + Vite - en cours)
 
 > **📝 CONSIGNE IMPORTANTE** : Ce fichier doit être mis à jour à chaque avancée significative du projet (fin de phase, ajout de fonctionnalité majeure, changement architectural, etc.). Toujours mettre à jour la date et l'état d'avancement.
@@ -9,6 +9,18 @@
 ---
 
 ## 📅 Journal des modifications
+
+### 23 octobre 2025 - 20:00
+**Phase 3 complétée** : Composables (logique métier)
+- ✅ utils/constants.js créé (toutes les constantes et options)
+- ✅ useReportState.js créé (état global réactif avec pattern singleton)
+- ✅ reportFormatter.js créé (fonctions de formatage du texte)
+- ✅ useReportGenerator.js créé (génération du rapport en temps réel)
+- ✅ useCancerResources.js créé (base de données de ressources médicales)
+- ✅ useLocalStorage.js créé (persistance automatique 24h avec auto-save)
+- ✅ Build testé : 31.44 KB gzippé (< 200 KB objectif maintenu)
+- ✅ Architecture composables complète et modulaire
+- 🎯 Prochaine étape : Phase 4 - Formulaires
 
 ### 23 octobre 2025 - 19:00
 **Phase 2 complétée** : Composants de base
@@ -235,15 +247,33 @@ src/components/ui/
 └── Preview.vue (Prévisualisation + copie)
 ```
 
-#### Phase 3 : Composables (logique métier) ⏳ À FAIRE
+#### Phase 3 : Composables (logique métier) ✅ TERMINÉE
 **Durée estimée** : 1h
+**Durée réelle** : 45 min
+**Statut** : Complété le 23 octobre 2025
+**Commit** : À venir - Phase 3 : Composables - Logique métier complète
 
-**Ordre de création :**
-1. `useReportState.js` - État global avec Composition API
-2. `constants.js` - Données statiques (cancers, indications)
-3. `useReportGenerator.js` - Génération du texte
-4. `useCancerResources.js` - Ressources par cancer
-5. `useLocalStorage.js` - Persistance automatique
+**Réalisations :**
+1. ✅ `utils/constants.js` - Toutes les constantes (indications, cancers, options par cancer)
+2. ✅ `composables/useReportState.js` - État global réactif avec pattern singleton
+3. ✅ `utils/reportFormatter.js` - Fonctions de formatage du texte par section
+4. ✅ `composables/useReportGenerator.js` - Génération du rapport en temps réel
+5. ✅ `composables/useCancerResources.js` - Base de données de ressources médicales
+6. ✅ `composables/useLocalStorage.js` - Persistance automatique avec auto-save
+7. ✅ Build testé : 31.44 KB gzippé (objectif < 200 KB maintenu)
+
+**Résultat :**
+```
+src/
+├── composables/
+│   ├── useReportState.js (État global singleton)
+│   ├── useReportGenerator.js (Génération texte)
+│   ├── useCancerResources.js (Ressources médicales)
+│   └── useLocalStorage.js (Persistance 24h)
+└── utils/
+    ├── constants.js (Toutes les constantes)
+    └── reportFormatter.js (Formatage texte)
+```
 
 #### Phase 4 : Formulaires ⏳ À FAIRE
 **Durée estimée** : 2h
