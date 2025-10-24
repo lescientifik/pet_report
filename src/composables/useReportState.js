@@ -17,8 +17,9 @@ export function useReportState() {
   // Informations patient
   const age = ref('')
   const sexe = ref('')
-  const traitement = ref('')
-  const dateTraitement = ref('')
+
+  // Traitements (liste)
+  const traitements = ref([])
 
   // Comparaisons TEP antérieurs
   const comparaisons = ref([])
@@ -39,6 +40,10 @@ export function useReportState() {
     return comparaisons.value.length > 0
   })
 
+  const hasTraitements = computed(() => {
+    return traitements.value.length > 0
+  })
+
   const cancerNeedsForm = computed(() => {
     const cancersWithForms = ['cancer du sein', 'cancer orl', 'lymphome', 'mélanome']
     return cancersWithForms.includes(cancer.value.toLowerCase())
@@ -51,12 +56,29 @@ export function useReportState() {
     Object.keys(cancerDetails).forEach(key => delete cancerDetails[key])
     age.value = ''
     sexe.value = ''
-    traitement.value = ''
-    dateTraitement.value = ''
+    traitements.value = []
     comparaisons.value = []
     resultats.value = ''
     conclusion.value = ''
     currentStep.value = 1
+  }
+
+  function addTraitement(traitement) {
+    traitements.value.push({
+      id: Date.now(),
+      ...traitement
+    })
+  }
+
+  function removeTraitement(id) {
+    traitements.value = traitements.value.filter(t => t.id !== id)
+  }
+
+  function updateTraitement(id, updates) {
+    const index = traitements.value.findIndex(t => t.id === id)
+    if (index !== -1) {
+      traitements.value[index] = { ...traitements.value[index], ...updates }
+    }
   }
 
   function addComparaison(comparaison) {
@@ -103,8 +125,7 @@ export function useReportState() {
     cancerDetails,
     age,
     sexe,
-    traitement,
-    dateTraitement,
+    traitements,
     comparaisons,
     resultats,
     conclusion,
@@ -113,10 +134,14 @@ export function useReportState() {
     // Computed
     isComplete,
     hasComparaisons,
+    hasTraitements,
     cancerNeedsForm,
 
     // Actions
     reset,
+    addTraitement,
+    removeTraitement,
+    updateTraitement,
     addComparaison,
     removeComparaison,
     updateComparaison,

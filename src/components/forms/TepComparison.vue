@@ -1,10 +1,30 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useReportState } from '@/composables/useReportState'
 import { TEP_TYPES } from '@/utils/constants'
 import ButtonGroup from '@/components/ui/ButtonGroup.vue'
 
-const { comparaisons, addComparaison, removeComparaison } = useReportState()
+const { comparaisons, addComparaison, removeComparaison, traitements } = useReportState()
+
+// Formater la date pour affichage
+function formatDate(dateStr) {
+  if (!dateStr) return ''
+  const date = new Date(dateStr)
+  return date.toLocaleDateString('fr-FR', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric'
+  })
+}
+
+// Récupérer les traitements systémiques avec date de début pour le rappel
+const traitementsSystemiques = computed(() => {
+  return traitements.value.filter(t => t.type === 'systemique' && t.dateDebut)
+})
+
+const hasTraitementsWithDate = computed(() => {
+  return traitementsSystemiques.value.length > 0
+})
 
 // État du formulaire d'ajout
 const showAddForm = ref(false)
@@ -32,7 +52,7 @@ function handleAddComparaison() {
   showAddForm.value = false
 }
 
-function formatDate(dateStr) {
+function formatDateShort(dateStr) {
   if (!dateStr) return ''
   const date = new Date(dateStr)
   return date.toLocaleDateString('fr-FR', {
@@ -56,6 +76,17 @@ function getTypeLabel(type) {
       Ajoutez les TEP antérieurs à mentionner dans le compte rendu (baseline, nadir, contrôle)
     </p>
 
+    <!-- Rappel dates traitements -->
+    <div v-if="hasTraitementsWithDate" class="treatment-reminder">
+      <strong>📅 Rappel :</strong> Date(s) de début des traitements systémiques :
+      <ul class="treatment-dates-list">
+        <li v-for="traitement in traitementsSystemiques" :key="traitement.id">
+          <strong>{{ traitement.nom }}</strong> : {{ formatDate(traitement.dateDebut) }}
+        </li>
+      </ul>
+      <span class="reminder-hint">Recherchez le baseline proche de ces dates</span>
+    </div>
+
     <!-- Liste des comparaisons -->
     <div v-if="comparaisons.length > 0" class="comparaisons-list">
       <div
@@ -65,7 +96,7 @@ function getTypeLabel(type) {
       >
         <div class="comparaison-header">
           <span class="comparaison-type">{{ getTypeLabel(comp.type) }}</span>
-          <span class="comparaison-date">{{ formatDate(comp.date) }}</span>
+          <span class="comparaison-date">{{ formatDateShort(comp.date) }}</span>
           <button
             class="btn-delete"
             @click="removeComparaison(comp.id)"
@@ -163,6 +194,33 @@ function getTypeLabel(type) {
   color: var(--text-secondary);
   font-size: 0.875rem;
   margin: 0;
+}
+
+.treatment-reminder {
+  padding: 1rem;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
+.treatment-dates-list {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+  list-style: disc;
+}
+
+.treatment-dates-list li {
+  margin: 0.25rem 0;
+}
+
+.reminder-hint {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-style: italic;
+  display: block;
+  margin-top: 0.5rem;
 }
 
 .comparaisons-list {

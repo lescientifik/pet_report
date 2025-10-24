@@ -4,7 +4,9 @@
 
 // ===== INDICATION =====
 export function buildIndicationText(state) {
-  const parts = []
+  const lines = []
+
+  lines.push('INDICATION')
 
   // Type d'indication
   const indicationLabels = {
@@ -15,43 +17,118 @@ export function buildIndicationText(state) {
   }
   const indicationText = indicationLabels[state.indication.value] || state.indication.value
 
-  // Construction de la phrase d'indication
-  parts.push(`INDICATION\nTEP-scan au 18-FDG réalisé dans le cadre du ${indicationText}`)
+  // Construction de la première ligne : Patient(e) de XX ans adressé(e) pour...
+  const firstLineParts = []
 
-  // Ajout du cancer
-  if (state.cancer.value) {
-    parts.push(` d'un ${state.cancer.value}`)
-  }
+  // Genre
+  const isFemale = state.sexe.value === 'F'
+  firstLineParts.push(isFemale ? 'Patiente' : 'Patient')
 
-  // Ajout des détails spécifiques au cancer
-  const cancerDetailsText = buildCancerDetailsText(state.cancer.value, state.cancerDetails)
-  if (cancerDetailsText) {
-    parts.push(` ${cancerDetailsText}`)
-  }
-
-  // Informations patient
-  const patientInfo = []
+  // Âge
   if (state.age.value) {
-    patientInfo.push(`${state.age.value} ans`)
-  }
-  if (state.sexe.value) {
-    const sexeLabel = state.sexe.value === 'M' ? 'homme' : 'femme'
-    patientInfo.push(sexeLabel)
+    firstLineParts.push(`de ${state.age.value} ans`)
   }
 
-  if (patientInfo.length > 0) {
-    parts.push(` chez un${state.sexe.value === 'F' ? 'e' : ''} patient${state.sexe.value === 'F' ? 'e' : ''} de ${patientInfo.join(', ')}`)
+  // Indication
+  firstLineParts.push(isFemale ? 'adressée' : 'adressé')
+  firstLineParts.push(`pour ${indicationText}`)
+
+  // Cancer
+  if (state.cancer.value) {
+    firstLineParts.push(`d'un ${state.cancer.value}`)
+
+    // Détails cancer
+    const cancerDetailsText = buildCancerDetailsText(state.cancer.value, state.cancerDetails)
+    if (cancerDetailsText) {
+      firstLineParts.push(cancerDetailsText)
+    }
   }
 
-  // Traitement en cours
-  if (state.traitement.value) {
-    const dateText = state.dateTraitement.value ? ` (${state.dateTraitement.value})` : ''
-    parts.push(`, actuellement sous ${state.traitement.value}${dateText}`)
+  firstLineParts.push('.')
+
+  lines.push(firstLineParts.join(' '))
+
+  // Traitements (chaque traitement sur une nouvelle ligne)
+  if (state.traitements.value && state.traitements.value.length > 0) {
+    state.traitements.value.forEach(traitement => {
+      const traitementLine = formatTraitementLine(traitement)
+      if (traitementLine) {
+        lines.push(traitementLine)
+      }
+    })
   }
 
-  parts.push('.')
+  return lines.join('\n')
+}
 
-  return parts.join('')
+// Formater une ligne de traitement
+function formatTraitementLine(traitement) {
+  if (traitement.type === 'systemique') {
+    // Traitement systémique débute le XX/XX/XXXX.
+    const parts = []
+    if (traitement.nom) {
+      parts.push(traitement.nom.charAt(0).toUpperCase() + traitement.nom.slice(1))
+    } else {
+      parts.push('Traitement systémique')
+    }
+
+    if (traitement.dateDebut) {
+      const date = new Date(traitement.dateDebut)
+      const dateFormatted = date.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' })
+      parts.push(`débuté le ${dateFormatted}.`)
+    } else {
+      parts.push('.')
+    }
+
+    return parts.join(' ')
+
+  } else if (traitement.type === 'chirurgie') {
+    // Type de chirurgie le XX/XX/XXXX.
+    const parts = []
+    if (traitement.nom) {
+      parts.push(traitement.nom.charAt(0).toUpperCase() + traitement.nom.slice(1))
+    } else {
+      parts.push('Chirurgie')
+    }
+
+    if (traitement.dateDebut) {
+      const date = new Date(traitement.dateDebut)
+      const dateFormatted = date.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' })
+      parts.push(`le ${dateFormatted}.`)
+    } else {
+      parts.push('.')
+    }
+
+    return parts.join(' ')
+
+  } else if (traitement.type === 'radiotherapie') {
+    // Radiothérapie localisation du XX/XX/XXXX au XX/XX/XXXX.
+    const parts = ['Radiothérapie']
+
+    if (traitement.nom) {
+      parts.push(traitement.nom)
+    }
+
+    const dates = []
+    if (traitement.dateDebut) {
+      const date = new Date(traitement.dateDebut)
+      dates.push(`du ${date.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' })}`)
+    }
+    if (traitement.dateFin) {
+      const date = new Date(traitement.dateFin)
+      dates.push(`au ${date.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' })}`)
+    }
+
+    if (dates.length > 0) {
+      parts.push(dates.join(' '))
+    }
+
+    parts.push('.')
+
+    return parts.join(' ')
+  }
+
+  return ''
 }
 
 // ===== DÉTAILS CANCER =====

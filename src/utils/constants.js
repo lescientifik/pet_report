@@ -107,3 +107,10 @@ export const SEXE_OPTIONS = [
   { value: 'M', label: 'Homme' },
   { value: 'F', label: 'Femme' }
 ]
+
+// ===== TYPES DE TRAITEMENT =====
+export const TRAITEMENT_TYPES = [
+  { value: 'systemique', label: 'Traitement systémique' },
+  { value: 'chirurgie', label: 'Chirurgie' },
+  { value: 'radiotherapie', label: 'Radiothérapie' }
+]
