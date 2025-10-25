@@ -63,6 +63,7 @@ function handleCancel() {
           type="text"
           class="form-input"
           placeholder="Ex: segment VII hépatique, vertèbre L3..."
+          data-testid="lesion-localisation"
         >
       </div>
 
@@ -78,6 +79,7 @@ function handleCancel() {
             step="0.1"
             class="form-input"
             placeholder="Ex: 8.5"
+            data-testid="lesion-suvmax"
           >
         </div>
 
@@ -92,6 +94,7 @@ function handleCancel() {
             step="0.1"
             class="form-input"
             placeholder="Ex: 12.3"
+            data-testid="lesion-volume"
           >
         </div>
       </div>

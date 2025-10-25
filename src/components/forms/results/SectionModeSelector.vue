@@ -5,7 +5,7 @@ const props = defineProps({
   modelValue: {
     type: String,
     required: true,
-    validator: (value) => ['normal', 'anomalie', 'lesion-cible'].includes(value)
+    validator: (value) => ['normal', 'anomalie'].includes(value)
   }
 })
 
@@ -13,8 +13,7 @@ const emit = defineEmits(['update:modelValue'])
 
 const modes = [
   { value: 'normal', label: 'Normal', icon: '✅' },
-  { value: 'anomalie', label: 'Anomalie', icon: '⚠️' },
-  { value: 'lesion-cible', label: 'Lésion cible', icon: '🎯' }
+  { value: 'anomalie', label: 'Anomalie (+ lésions cibles)', icon: '⚠️' }
 ]
 
 function selectMode(mode) {

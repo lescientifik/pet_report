@@ -1,5 +1,5 @@
 /**
- * Test sections anatomiques: Normal, Anomalie, Lésion cible modes
+ * Test sections anatomiques: Normal et Anomalie (avec lésions cibles optionnelles)
  */
 
 import {
@@ -67,25 +67,47 @@ export async function testSectionsAnatomiques(page, reporter) {
     }
 
     // Type some text
-    await typeText(page, 'textarea', 'Hyperfixation cérébrale suspecte')
+    await typeText(page, 'textarea', 'Hyperfixation cérébrale suspecte SUVmax 12.5')
 
     // Verify text appears in preview
     await new Promise(resolve => setTimeout(resolve, 500))
-    const previewText = await page.$eval('.preview-content', el => el.textContent)
+    let previewText = await page.$eval('.preview-content', el => el.textContent)
     if (!previewText.includes('Hyperfixation')) {
       throw new Error('Anomalie text should appear in preview')
     }
 
-    // Test 3: Switch to "Lésion cible" mode
-    await clickElement(page, '[data-testid="mode-lesion-cible"]')
+    // Test 3: Add lesion target in Anomalie mode (texte + lésions simultanés)
+    // Verify lesion form is visible in Anomalie mode (always displayed)
     await new Promise(resolve => setTimeout(resolve, 500))
 
-    // Check form is visible
-    const lesionFormVisible = await page.$('.lesion-form')
-    if (!lesionFormVisible) {
+    const lesionLocInput = await page.$('[data-testid="lesion-localisation"]')
+    if (!lesionLocInput) {
       const screenshot = await takeScreenshot(page, 'lesion-form-missing')
       screenshots.push(screenshot)
-      throw new Error('Lésion cible form should be visible')
+      throw new Error('Lesion form should be visible in Anomalie mode')
+    }
+
+    await typeText(page, '[data-testid="lesion-localisation"]', 'Cortex frontal droit')
+    await typeText(page, '[data-testid="lesion-suvmax"]', '12.5')
+    await typeText(page, '[data-testid="lesion-volume"]', '3.2')
+    await new Promise(resolve => setTimeout(resolve, 500))
+
+    // Click "Add" button to add the lesion
+    const addButton = await page.$('.lesion-form .btn-primary')
+    if (addButton) {
+      await addButton.click()
+      await new Promise(resolve => setTimeout(resolve, 500))
+    }
+
+    // Verify both text AND lesion appear in preview
+    previewText = await page.$eval('.preview-content', el => el.textContent)
+    if (!previewText.includes('Hyperfixation')) {
+      throw new Error('Original text should still be in preview')
+    }
+    if (!previewText.includes('Cortex frontal') || !previewText.includes('12.5')) {
+      const screenshot = await takeScreenshot(page, 'lesion-not-in-preview')
+      screenshots.push(screenshot)
+      throw new Error('Lesion target should appear in preview after text')
     }
 
     // Test 4: Navigate to another section (tab)
@@ -111,14 +133,14 @@ export async function testSectionsAnatomiques(page, reporter) {
       throw error
     }
 
-    reporter.recordPass('Sections anatomiques: 3 modes')
+    reporter.recordPass('Sections anatomiques: 2 modes (Normal + Anomalie avec lésions)')
 
   } catch (error) {
     error.consoleErrors = getConsoleErrors(page)
     if (screenshots.length === 0) {
       screenshots.push(await takeScreenshot(page, 'final-error'))
     }
-    reporter.recordFailure('Sections anatomiques: 3 modes', error, screenshots)
+    reporter.recordFailure('Sections anatomiques: 2 modes (Normal + Anomalie avec lésions)', error, screenshots)
     throw error
   }
 }

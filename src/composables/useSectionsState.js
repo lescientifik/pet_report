@@ -15,9 +15,9 @@ export function useSectionsState() {
   const sections = ref(
     ANATOMICAL_SECTIONS.reduce((acc, section) => {
       acc[section.id] = {
-        status: 'normal', // 'normal' | 'anomalie' | 'lesion-cible'
-        text: '',
-        lesions: []
+        status: 'normal', // 'normal' | 'anomalie'
+        text: '',         // Texte libre en mode anomalie
+        lesions: []       // Lésions cibles optionnelles en mode anomalie
       }
       return acc
     }, {})
@@ -68,6 +68,7 @@ export function useSectionsState() {
       sections.value[sectionId].status = status
 
       // Si on passe en mode "normal", effacer le texte et les lésions
+      // Si on passe en mode "anomalie", conserver le texte et les lésions
       if (status === 'normal') {
         sections.value[sectionId].text = ''
         sections.value[sectionId].lesions = []

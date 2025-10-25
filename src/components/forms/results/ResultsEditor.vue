@@ -3,7 +3,7 @@ import { useSectionsState } from '@/composables/useSectionsState'
 import SectionTabs from './SectionTabs.vue'
 import SectionEditor from './SectionEditor.vue'
 
-const { completedSectionsCount, totalLesions } = useSectionsState()
+const { totalLesions } = useSectionsState()
 </script>
 
 <template>
@@ -15,16 +15,10 @@ const { completedSectionsCount, totalLesions } = useSectionsState()
       Les phrases types seront automatiquement insérées pour les sections normales.
     </p>
 
-    <!-- Indicateurs de progression -->
-    <div class="progress-indicators">
-      <div class="indicator">
-        <span class="indicator-icon">📊</span>
-        <span class="indicator-text">{{ completedSectionsCount }} / 4 sections renseignées</span>
-      </div>
-      <div v-if="totalLesions > 0" class="indicator">
-        <span class="indicator-icon">🎯</span>
-        <span class="indicator-text">{{ totalLesions }} lésion(s) cible(s)</span>
-      </div>
+    <!-- Indicateur lésions cibles -->
+    <div v-if="totalLesions > 0" class="lesions-indicator">
+      <span class="indicator-icon">🎯</span>
+      <span class="indicator-text">{{ totalLesions }} lésion(s) cible(s) au total</span>
     </div>
 
     <!-- Onglets de navigation -->
@@ -60,19 +54,13 @@ const { completedSectionsCount, totalLesions } = useSectionsState()
   line-height: 1.5;
 }
 
-.progress-indicators {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.indicator {
+.lesions-indicator {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 1rem;
-  background: var(--background);
-  border: 1px solid var(--border-color);
+  background: var(--primary-light);
+  border: 1px solid var(--primary-color);
   border-radius: var(--radius);
 }
 
@@ -95,13 +83,4 @@ const { completedSectionsCount, totalLesions } = useSectionsState()
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-@media (max-width: 768px) {
-  .progress-indicators {
-    flex-direction: column;
-  }
-
-  .indicator {
-    width: 100%;
-  }
-}
 </style>

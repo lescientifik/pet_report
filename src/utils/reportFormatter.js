@@ -272,26 +272,35 @@ export function buildResultsText(state, sectionsState = null) {
 function buildResultsSection(section, sectionState) {
   if (!sectionState) return ''
 
+  // Mode Normal : phrase type
   if (sectionState.status === 'normal') {
     return section.normalPhrase
   }
 
-  if (sectionState.status === 'anomalie' && sectionState.text) {
-    return sectionState.text
-  }
+  // Mode Anomalie : texte libre + lésions cibles (si présentes)
+  if (sectionState.status === 'anomalie') {
+    const parts = []
 
-  if (sectionState.status === 'lesion-cible' && sectionState.lesions.length > 0) {
-    const lines = []
-    sectionState.lesions.forEach((lesion, idx) => {
-      let line = `Lésion cible ${idx + 1} : ${lesion.localisation}`
-      line += `, SUVmax ${lesion.suvmax}`
-      if (lesion.volume) {
-        line += `, volume métabolique ${lesion.volume} ml`
-      }
-      line += '.'
-      lines.push(line)
-    })
-    return lines.join('\n')
+    // Texte libre de l'utilisateur
+    if (sectionState.text) {
+      parts.push(sectionState.text)
+    }
+
+    // Lésions cibles (optionnelles, après le texte)
+    if (sectionState.lesions && sectionState.lesions.length > 0) {
+      parts.push('\n\nLésions cibles :')
+      sectionState.lesions.forEach((lesion, idx) => {
+        let line = `- L${idx + 1} : ${lesion.localisation}`
+        line += `, SUVmax ${lesion.suvmax}`
+        if (lesion.volume) {
+          line += `, volume ${lesion.volume} ml`
+        }
+        line += '.'
+        parts.push('\n' + line)
+      })
+    }
+
+    return parts.join('')
   }
 
   // Si aucun contenu, retourner la phrase normale par défaut

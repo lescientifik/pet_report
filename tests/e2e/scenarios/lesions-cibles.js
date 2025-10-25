@@ -38,8 +38,8 @@ export async function testLesionsCibles(page, reporter) {
     await clickElement(page, '[data-testid="btn-next-step"]')
     await new Promise(resolve => setTimeout(resolve, 1000))
 
-    // Switch to Lésion cible mode
-    await clickElement(page, '[data-testid="mode-lesion-cible"]')
+    // Switch to Anomalie mode (lésions cibles are now in this mode)
+    await clickElement(page, '[data-testid="mode-anomalie"]')
     await new Promise(resolve => setTimeout(resolve, 500))
 
     // Test 1: Add a lesion
@@ -65,7 +65,7 @@ export async function testLesionsCibles(page, reporter) {
 
     // Verify it appears in preview
     const previewText = await page.$eval('.preview-content', el => el.textContent)
-    if (!previewText.includes('Lésion cible')) {
+    if (!previewText.includes('Lésions cibles') && !previewText.includes('Segment VII')) {
       throw new Error('Lesion should appear in preview report')
     }
 

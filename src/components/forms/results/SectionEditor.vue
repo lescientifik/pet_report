@@ -71,29 +71,38 @@ function handleUpdateLesion(lesionId, updates) {
         </p>
       </div>
 
-      <!-- Mode Anomalie -->
+      <!-- Mode Anomalie (avec lésions cibles optionnelles) -->
       <div v-else-if="currentSectionState.status === 'anomalie'" class="anomalie-mode">
+        <!-- Description texte libre -->
         <AnomalieInput
           :model-value="currentSectionState.text"
           :suggestions="currentSection.commonAnomalies"
           @update:model-value="handleTextUpdate"
         />
-      </div>
 
-      <!-- Mode Lésion cible -->
-      <div v-else-if="currentSectionState.status === 'lesion-cible'" class="lesion-mode">
-        <!-- Liste des lésions existantes -->
-        <LesionsList
-          :lesions="currentSectionState.lesions"
-          @update-lesion="handleUpdateLesion"
-          @remove-lesion="handleRemoveLesion"
-        />
+        <!-- Séparateur visuel -->
+        <div class="lesions-section">
+          <h4 class="lesions-title">
+            🎯 Lésions cibles (optionnel)
+            <span class="lesions-count" v-if="currentSectionState.lesions.length > 0">
+              {{ currentSectionState.lesions.length }}
+            </span>
+          </h4>
 
-        <!-- Formulaire d'ajout -->
-        <LesionCibleForm
-          :section-id="activeSection"
-          @add-lesion="handleAddLesion"
-        />
+          <!-- Liste des lésions existantes -->
+          <LesionsList
+            v-if="currentSectionState.lesions.length > 0"
+            :lesions="currentSectionState.lesions"
+            @update-lesion="handleUpdateLesion"
+            @remove-lesion="handleRemoveLesion"
+          />
+
+          <!-- Formulaire d'ajout -->
+          <LesionCibleForm
+            :section-id="activeSection"
+            @add-lesion="handleAddLesion"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -170,13 +179,42 @@ function handleUpdateLesion(lesionId, updates) {
 
 /* Mode Anomalie */
 .anomalie-mode {
-  /* Styles gérés par AnomalieInput */
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
-/* Mode Lésion cible */
-.lesion-mode {
+.lesions-section {
+  padding: 1.5rem;
+  background: var(--background);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+}
+
+.lesions-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lesions-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  padding: 0 0.5rem;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 600;
 }
 </style>
