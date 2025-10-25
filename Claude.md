@@ -772,8 +772,13 @@ npm run preview
 - Claude NE doit PAS créer de PR ni merger vers main sans demande explicite
 
 ### Débogage et Tests
-- ⚠️ **IMPORTANT** : L'utilisateur débogue **toujours directement sur le site en ligne** (GitHub Pages)
-- Avant chaque commit, Claude DOIT vérifier que le code va bien fonctionner sur GitHub Pages :
+- ⚠️ **IMPORTANT** : Avant chaque commit, Claude DOIT **obligatoirement** exécuter les tests automatisés pour valider les fonctionnalités
+  - Commande : `cd .claude/skills/test-pet-report && node index.js all`
+  - Lance des tests end-to-end automatisés avec Puppeteer qui simulent l'utilisation réelle de l'application
+  - Teste tous les workflows principaux (bilan initial, réévaluation, sections anatomiques, lésions cibles)
+  - Si les tests échouent, corriger les bugs AVANT de commit
+  - Ne JAMAIS commit sans avoir exécuté et validé les tests (tous doivent être ✅)
+- Avant chaque commit, Claude DOIT également vérifier que le code va bien fonctionner sur GitHub Pages :
   - Vérifier les chemins relatifs (base: '/pet_report/')
   - Vérifier les imports et assets
   - Tester le build en local (`npm run build`)
@@ -813,6 +818,11 @@ npm run preview
 cd pet_report
 npm install
 npm run dev
+
+# Tester l'application (OBLIGATOIRE avant chaque commit)
+cd .claude/skills/test-pet-report && node index.js all
+# Ou pour un test rapide (10s):
+cd .claude/skills/test-pet-report && node index.js quick
 
 # Créer nouveau composant
 touch src/components/forms/NouveauComposant.vue
