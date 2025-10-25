@@ -1,16 +1,13 @@
 # 🧪 Test Report - pet_report
-**Date**: 25/10/2025 09:30:40
-**Duration**: 0m 29s
+**Date**: 25/10/2025 10:49:10
+**Duration**: 0m 6s
 
 ## Summary
-✅ **All tests passed (4/4)**
+✅ **All tests passed (1/1)**
 
 ---
 
 ## ✅ Passed Tests
 
 - ✅ Workflow: Bilan d'extension
-- ✅ Workflow: Réévaluation (all steps)
-- ✅ Sections anatomiques: 3 modes
-- ✅ Lésions cibles: CRUD operations
 

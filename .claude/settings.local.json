@@ -1,17 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(node --version)",
-      "Bash(npm --version)",
-      "Bash(npm install)",
-      "Bash(npm run dev)",
-      "Bash(git add -A)",
-      "Bash(git push origin main)",
-      "Bash(npm update puppeteer)",
-      "Bash(node index.js quick)",
-      "Bash(node index.js all)",
-      "Bash(npm run build:*)",
-      "Bash(git commit -m \"$(cat <<''EOF''\nfix: Réinitialisation complète incluant les sections anatomiques\n\n- Ajout de l''appel à resetSections() lors de la réinitialisation\n- Corrige le bug où les formulaires de résultats n''étaient pas vidés\n- Import du composable useSectionsState dans App.vue\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\ndocs: Ajout instruction de tests obligatoires avant commit\n\n- Documentation de l''utilisation des tests automatisés\n- Commande obligatoire : cd .claude/skills/test-pet-report && node index.js all\n- Tests E2E avec Puppeteer pour valider les workflows\n- Ajout dans \"Commandes utiles\" pour faciliter l''accès\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(npm test:*)"
     ],
     "deny": [],
     "ask": []

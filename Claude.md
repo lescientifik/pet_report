@@ -773,11 +773,13 @@ npm run preview
 
 ### Débogage et Tests
 - ⚠️ **IMPORTANT** : Avant chaque commit, Claude DOIT **obligatoirement** exécuter les tests automatisés pour valider les fonctionnalités
-  - Commande : `cd .claude/skills/test-pet-report && node index.js all`
+  - Commande : `npm test` (lance tous les tests E2E)
+  - Alternative rapide : `npm test quick` (smoke test ~10s)
   - Lance des tests end-to-end automatisés avec Puppeteer qui simulent l'utilisation réelle de l'application
   - Teste tous les workflows principaux (bilan initial, réévaluation, sections anatomiques, lésions cibles)
   - Si les tests échouent, corriger les bugs AVANT de commit
   - Ne JAMAIS commit sans avoir exécuté et validé les tests (tous doivent être ✅)
+  - Les tests sont dans `tests/e2e/` (partie du code du projet, pas un skill)
 - Avant chaque commit, Claude DOIT également vérifier que le code va bien fonctionner sur GitHub Pages :
   - Vérifier les chemins relatifs (base: '/pet_report/')
   - Vérifier les imports et assets
@@ -820,9 +822,9 @@ npm install
 npm run dev
 
 # Tester l'application (OBLIGATOIRE avant chaque commit)
-cd .claude/skills/test-pet-report && node index.js all
+npm test
 # Ou pour un test rapide (10s):
-cd .claude/skills/test-pet-report && node index.js quick
+npm test quick
 
 # Créer nouveau composant
 touch src/components/forms/NouveauComposant.vue

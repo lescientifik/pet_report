@@ -1,15 +1,17 @@
 #!/usr/bin/env node
 
 /**
- * Entry point for test-pet-report skill
- * Usage: /test [scenario]
+ * E2E Test Runner for Pet Report
+ * Usage: npm test [scenario]
+ * Scenarios: all, quick, workflow, sections, lesions
  */
 
 import { runTests } from './test-runner.js'
 
 const scenario = process.argv[2] || 'all'
 
-console.log(`🧪 Starting tests for scenario: ${scenario}`)
+console.log(`🧪 Starting E2E tests for pet_report`)
+console.log(`📦 Scenario: ${scenario}\n`)
 
 try {
   const results = await runTests(scenario)

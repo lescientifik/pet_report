@@ -7,7 +7,12 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "vite build && touch dist/.nojekyll && gh-pages -d dist -t true"
+    "deploy": "vite build && touch dist/.nojekyll && gh-pages -d dist -t true",
+    "test": "node tests/e2e/run-tests.js",
+    "test:quick": "node tests/e2e/run-tests.js quick",
+    "test:workflow": "node tests/e2e/run-tests.js workflow",
+    "test:sections": "node tests/e2e/run-tests.js sections",
+    "test:lesions": "node tests/e2e/run-tests.js lesions"
   },
   "dependencies": {
     "vue": "^3.4.0"
