@@ -114,3 +114,59 @@ export const TRAITEMENT_TYPES = [
   { value: 'chirurgie', label: 'Chirurgie' },
   { value: 'radiotherapie', label: 'Radiothérapie' }
 ]
+
+// ===== SECTIONS ANATOMIQUES =====
+export const ANATOMICAL_SECTIONS = [
+  {
+    id: 'cervico-encephalique',
+    label: 'Étage cervico-encéphalique',
+    normalPhrase: 'Absence de fixation pathologique cérébrale.',
+    icon: '🧠',
+    commonAnomalies: [
+      'Hyperfixation cérébrale',
+      'Adénopathie cervicale',
+      'Fixation thyroïdienne',
+      'Lésion cérébrale',
+      'Adénopathie sus-claviculaire'
+    ]
+  },
+  {
+    id: 'thoracique',
+    label: 'Étage thoracique',
+    normalPhrase: 'Absence de fixation pathologique pleuro-pulmonaire.',
+    icon: '🫁',
+    commonAnomalies: [
+      'Nodule pulmonaire',
+      'Adénopathie médiastinale',
+      'Épanchement pleural',
+      'Masse médiastinale',
+      'Adénopathie hilaire'
+    ]
+  },
+  {
+    id: 'abdomino-pelvien',
+    label: 'Étage abdomino-pelvien',
+    normalPhrase: 'Absence de fixation pathologique abdomino-pelvienne.',
+    icon: '🫄',
+    commonAnomalies: [
+      'Lésion hépatique',
+      'Lésion péritonéale',
+      'Adénopathie rétro-péritonéale',
+      'Lésion splénique',
+      'Adénopathie iliaque'
+    ]
+  },
+  {
+    id: 'osteo-medullaire',
+    label: 'Étage ostéo-médullaire et cutané',
+    normalPhrase: 'Absence de fixation pathologique ostéo-médullaire ni cutanée.',
+    icon: '🦴',
+    commonAnomalies: [
+      'Lésion osseuse',
+      'Lésion cutanée',
+      'Multiples fixations osseuses',
+      'Atteinte vertébrale',
+      'Atteinte costale'
+    ]
+  }
+]

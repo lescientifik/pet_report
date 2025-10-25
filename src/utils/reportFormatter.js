@@ -2,6 +2,8 @@
  * Fonctions utilitaires pour formater les différentes parties du compte rendu
  */
 
+import { ANATOMICAL_SECTIONS } from './constants'
+
 // ===== INDICATION =====
 export function buildIndicationText(state) {
   const lines = []
@@ -219,7 +221,7 @@ function buildMelanomeDetails(details) {
 }
 
 // ===== RÉSULTATS =====
-export function buildResultsText(state) {
+export function buildResultsText(state, sectionsState = null) {
   const parts = []
 
   parts.push('RÉSULTATS')
@@ -238,17 +240,62 @@ export function buildResultsText(state) {
     parts.push('\n')
   }
 
-  // Résultats saisis
-  if (state.resultats.value) {
-    if (state.comparaisons.value && state.comparaisons.value.length > 0) {
-      parts.push('\n')
-    } else {
-      parts.push('\n\n')
+  // Si sections state fourni, générer par sections anatomiques
+  if (sectionsState && sectionsState.sections) {
+    parts.push('\n')
+
+    ANATOMICAL_SECTIONS.forEach(section => {
+      const sectionState = sectionsState.sections.value[section.id]
+      const sectionText = buildResultsSection(section, sectionState)
+
+      if (sectionText) {
+        parts.push(`\n${section.label} :`)
+        parts.push(`\n${sectionText}`)
+      }
+    })
+  } else {
+    // Fallback : résultats saisis en texte libre (ancien mode)
+    if (state.resultats.value) {
+      if (state.comparaisons.value && state.comparaisons.value.length > 0) {
+        parts.push('\n')
+      } else {
+        parts.push('\n\n')
+      }
+      parts.push(state.resultats.value)
     }
-    parts.push(state.resultats.value)
   }
 
   return parts.join('')
+}
+
+// Construire le texte pour une section anatomique
+function buildResultsSection(section, sectionState) {
+  if (!sectionState) return ''
+
+  if (sectionState.status === 'normal') {
+    return section.normalPhrase
+  }
+
+  if (sectionState.status === 'anomalie' && sectionState.text) {
+    return sectionState.text
+  }
+
+  if (sectionState.status === 'lesion-cible' && sectionState.lesions.length > 0) {
+    const lines = []
+    sectionState.lesions.forEach((lesion, idx) => {
+      let line = `Lésion cible ${idx + 1} : ${lesion.localisation}`
+      line += `, SUVmax ${lesion.suvmax}`
+      if (lesion.volume) {
+        line += `, volume métabolique ${lesion.volume} ml`
+      }
+      line += '.'
+      lines.push(line)
+    })
+    return lines.join('\n')
+  }
+
+  // Si aucun contenu, retourner la phrase normale par défaut
+  return section.normalPhrase
 }
 
 // ===== CONCLUSION =====
@@ -261,7 +308,7 @@ export function buildConclusionText(state) {
 }
 
 // ===== RAPPORT COMPLET =====
-export function buildFullReport(state) {
+export function buildFullReport(state, sectionsState = null) {
   const sections = []
 
   // Section Indication
@@ -270,8 +317,14 @@ export function buildFullReport(state) {
   }
 
   // Section Résultats
-  if (state.resultats.value || (state.comparaisons.value && state.comparaisons.value.length > 0)) {
-    sections.push(buildResultsText(state))
+  // Si sectionsState fourni, toujours générer (même si tout est normal)
+  // Sinon, seulement si résultats saisis
+  const shouldBuildResults = sectionsState
+    ? true
+    : (state.resultats.value || (state.comparaisons.value && state.comparaisons.value.length > 0))
+
+  if (shouldBuildResults) {
+    sections.push(buildResultsText(state, sectionsState))
   }
 
   // Section Conclusion

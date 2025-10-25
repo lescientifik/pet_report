@@ -1,11 +1,13 @@
 import { watch, toRaw } from 'vue'
 import { useReportState } from './useReportState'
+import { useSectionsState } from './useSectionsState'
 
 const STORAGE_KEY = 'petReportState'
 const EXPIRY_HOURS = 24
 
 export function useLocalStorage() {
   const state = useReportState()
+  const sectionsState = useSectionsState()
 
   // Sauvegarde automatique de l'état
   function save() {
@@ -16,18 +18,19 @@ export function useLocalStorage() {
         cancerDetails: toRaw(state.cancerDetails),
         age: state.age.value,
         sexe: state.sexe.value,
-        traitement: state.traitement.value,
-        dateTraitement: state.dateTraitement.value,
+        traitements: toRaw(state.traitements.value),
         comparaisons: toRaw(state.comparaisons.value),
         resultats: state.resultats.value,
         conclusion: state.conclusion.value,
-        currentStep: state.currentStep.value
+        currentStep: state.currentStep.value,
+        sections: toRaw(sectionsState.sections.value),
+        activeSection: sectionsState.activeSection.value
       }
 
       const data = {
         state: stateToSave,
         timestamp: Date.now(),
-        version: '1.0.0'
+        version: '1.1.0' // Incrémenté pour sections
       }
 
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
@@ -71,12 +74,19 @@ export function useLocalStorage() {
 
       state.age.value = savedState.age || ''
       state.sexe.value = savedState.sexe || ''
-      state.traitement.value = savedState.traitement || ''
-      state.dateTraitement.value = savedState.dateTraitement || ''
+      state.traitements.value = savedState.traitements || []
       state.comparaisons.value = savedState.comparaisons || []
       state.resultats.value = savedState.resultats || ''
       state.conclusion.value = savedState.conclusion || ''
       state.currentStep.value = savedState.currentStep || 1
+
+      // Restaurer sections si présentes (v1.1.0+)
+      if (savedState.sections) {
+        Object.assign(sectionsState.sections.value, savedState.sections)
+      }
+      if (savedState.activeSection) {
+        sectionsState.activeSection.value = savedState.activeSection
+      }
 
       return {
         success: true,
@@ -109,12 +119,13 @@ export function useLocalStorage() {
       watch(() => state.cancerDetails, save, { deep: true }),
       watch(() => state.age.value, save),
       watch(() => state.sexe.value, save),
-      watch(() => state.traitement.value, save),
-      watch(() => state.dateTraitement.value, save),
+      watch(() => state.traitements.value, save, { deep: true }),
       watch(() => state.comparaisons.value, save, { deep: true }),
       watch(() => state.resultats.value, save),
       watch(() => state.conclusion.value, save),
-      watch(() => state.currentStep.value, save)
+      watch(() => state.currentStep.value, save),
+      watch(() => sectionsState.sections.value, save, { deep: true }),
+      watch(() => sectionsState.activeSection.value, save)
     ]
 
     // Retourner une fonction pour arrêter tous les watchers

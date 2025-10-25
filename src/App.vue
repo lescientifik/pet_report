@@ -15,7 +15,7 @@ import IndicationSelector from '@/components/forms/IndicationSelector.vue'
 import CancerSelector from '@/components/forms/CancerSelector.vue'
 import TreatmentInfo from '@/components/forms/TreatmentInfo.vue'
 import TepComparison from '@/components/forms/TepComparison.vue'
-import ResultsForm from '@/components/forms/ResultsForm.vue'
+import ResultsEditor from '@/components/forms/results/ResultsEditor.vue'
 import ConclusionForm from '@/components/forms/ConclusionForm.vue'
 
 // Formulaires spécifiques cancer
@@ -257,7 +257,7 @@ function resetForm() {
           :active="currentStepName === 'results'"
           :title="`Étape ${stepMapping.find(s => s.name === 'results')?.step} : Résultats`"
         >
-          <ResultsForm />
+          <ResultsEditor />
         </FormStep>
 
         <!-- Étape 7 : Conclusion -->

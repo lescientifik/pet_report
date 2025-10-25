@@ -5,7 +5,8 @@
       "Bash(npm --version)",
       "Bash(npm install)",
       "Bash(npm run dev)",
-      "Bash(git add -A)"
+      "Bash(git add -A)",
+      "Bash(git push origin main)"
     ],
     "deny": [],
     "ask": []

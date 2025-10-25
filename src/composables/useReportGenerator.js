@@ -1,13 +1,15 @@
 import { computed } from 'vue'
 import { useReportState } from './useReportState'
+import { useSectionsState } from './useSectionsState'
 import { buildFullReport } from '@/utils/reportFormatter'
 
 export function useReportGenerator() {
   const state = useReportState()
+  const sectionsState = useSectionsState()
 
   // Génération du rapport complet en temps réel
   const report = computed(() => {
-    return buildFullReport(state)
+    return buildFullReport(state, sectionsState)
   })
 
   // Vérifie si le rapport a du contenu
