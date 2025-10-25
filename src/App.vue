@@ -3,6 +3,7 @@ import { computed, onMounted } from 'vue'
 import { useReportState } from '@/composables/useReportState'
 import { useReportGenerator } from '@/composables/useReportGenerator'
 import { useLocalStorage } from '@/composables/useLocalStorage'
+import { useSectionsState } from '@/composables/useSectionsState'
 import { CANCER_FORM_MAP } from '@/utils/constants'
 
 import AppLayout from '@/components/ui/AppLayout.vue'
@@ -28,6 +29,7 @@ import MelanomeForm from '@/components/forms/cancer-specific/MelanomeForm.vue'
 const state = useReportState()
 const { report } = useReportGenerator()
 const storage = useLocalStorage()
+const sectionsState = useSectionsState()
 
 // Charger les données sauvegardées au démarrage et activer l'auto-save
 onMounted(() => {
@@ -185,6 +187,7 @@ function prevStep() {
 function resetForm() {
   if (confirm('Êtes-vous sûr de vouloir réinitialiser le formulaire ?')) {
     state.reset()
+    sectionsState.resetSections()
     storage.clear()
   }
 }
@@ -273,6 +276,7 @@ function resetForm() {
           <button
             v-if="state.currentStep.value > 1"
             class="btn-secondary"
+            data-testid="btn-prev-step"
             @click="prevStep"
           >
             ← Étape précédente
@@ -280,6 +284,7 @@ function resetForm() {
 
           <button
             class="btn-secondary"
+            data-testid="btn-reset"
             @click="resetForm"
           >
             🔄 Réinitialiser
@@ -288,6 +293,7 @@ function resetForm() {
           <button
             v-if="state.currentStep.value < totalSteps"
             class="btn-primary"
+            data-testid="btn-next-step"
             :disabled="!canGoNext"
             @click="nextStep"
           >

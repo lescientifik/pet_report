@@ -29,6 +29,7 @@ function selectMode(mode) {
       :key="mode.value"
       class="mode-button"
       :class="{ active: modelValue === mode.value }"
+      :data-testid="`mode-${mode.value}`"
       @click="selectMode(mode.value)"
     >
       <span class="mode-icon">{{ mode.icon }}</span>

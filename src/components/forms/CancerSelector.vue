@@ -68,6 +68,7 @@ function handleSearchSelect() {
           :key="option.value"
           class="cancer-card"
           :class="{ active: cancer === option.value }"
+          :data-testid="`cancer-${option.value}`"
           @click="selectCancer(option.value)"
         >
           <div class="cancer-icon">{{ option.icon }}</div>

@@ -39,6 +39,7 @@ function selectIndication(value) {
           :key="option.value"
           class="indication-card"
           :class="{ active: indication === option.value }"
+          :data-testid="`indication-${option.value}`"
           @click="selectIndication(option.value)"
         >
           <div class="indication-icon">{{ option.icon }}</div>

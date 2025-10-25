@@ -6,7 +6,12 @@
       "Bash(npm install)",
       "Bash(npm run dev)",
       "Bash(git add -A)",
-      "Bash(git push origin main)"
+      "Bash(git push origin main)",
+      "Bash(npm update puppeteer)",
+      "Bash(node index.js quick)",
+      "Bash(node index.js all)",
+      "Bash(npm run build:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nfix: Réinitialisation complète incluant les sections anatomiques\n\n- Ajout de l''appel à resetSections() lors de la réinitialisation\n- Corrige le bug où les formulaires de résultats n''étaient pas vidés\n- Import du composable useSectionsState dans App.vue\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
     ],
     "deny": [],
     "ask": []

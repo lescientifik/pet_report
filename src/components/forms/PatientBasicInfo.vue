@@ -21,6 +21,7 @@ const { age, sexe } = useReportState()
         placeholder="Ex: 58"
         min="0"
         max="120"
+        data-testid="age-input"
       >
     </div>
 
@@ -30,6 +31,7 @@ const { age, sexe } = useReportState()
       <ButtonGroup
         v-model="sexe"
         :options="SEXE_OPTIONS"
+        data-testid="sexe-buttons"
       />
     </div>
   </div>

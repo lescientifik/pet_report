@@ -52,6 +52,7 @@ function isSelected(value) {
       type="button"
       class="btn-option"
       :class="{ selected: isSelected(option.value) }"
+      :data-testid="`btn-${option.value}`"
       @click="selectOption(option.value)"
     >
       {{ option.label }}
